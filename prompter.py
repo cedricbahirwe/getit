@@ -11,10 +11,10 @@ client = OpenAI(
 
 
 def request_commit_messages(question: str) -> list[str]:
-    tokenizer = tiktoken.encoding_for_model("gpt-4")
-    tokens = tokenizer.encode(question)
+    # tokenizer = tiktoken.encoding_for_model("gpt-4")
+    # tokens = tokenizer.encode(question)
 
-    print(f"Found {len(tokens)}")
+    # print(f"Found {len(tokens)}")
 
     response = client.completions.create(
         model="gpt-3.5-turbo-instruct",  # Specify the model you want to use
@@ -23,17 +23,16 @@ def request_commit_messages(question: str) -> list[str]:
         temperature=0.3,
         max_tokens=150  # Limit the response size
     )
-    print(f"Received {len(response.choices)} {
-          response.usage} {response.choices[0].finish_reason}")
+    # print(f"Received {len(response.choices)} {response.usage} {response.choices[0].finish_reason}")
 
     # Extract the response text and split into messages
-    print(f"Before:\n{response.choices[0].text}")
+    # print(f"Before:\n{response.choices[0].text}")
 
     messages = response.choices[0].text.strip().split('\n')
     # Filter out empty messages and clean them up
     messages = [strip_non_letters(msg) for msg in messages if msg.strip()]
 
-    print(f"After\n: {messages}")
+    # print(f"After\n: {messages}")
 
     return messages
 
