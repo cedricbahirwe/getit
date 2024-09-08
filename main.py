@@ -25,8 +25,8 @@ def main():
         return
 
     # For DEBUG purpose
-    # file_path = save_diff_to_file(diff_output)
-    # print(f"Git diff output saved to: {file_path}")
+    file_path = save_diff_to_file(diff_output)
+    print(f"Git diff output saved to: {file_path}")
 
     # Suggest commit messages
     suggest_commit_message(directory, diff_output)

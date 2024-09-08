@@ -52,9 +52,9 @@ def suggest_commit_message(directory: str, diff_content: str):
     # diff_content}"
 
     # Prompt for commit messages generation
-    question = f"""Based on the diffs provided below, suggest exactly 3 concise and meaningful commit messages.
+    question = f"""Based on the diffs provided below, Suggest exactly 3 concise and meaningful commit messages.
                    Each commit message should be on a new line and formatted as plain text.
-                   Do not include numbers, quotes, or any additional characters in the messages.
+                   Do not include numbers, quotes, or any additional characters in the message.
                    Return only the commit messages as an array of plain text strings.\nDiffs:\n {diff_content}"""
 
     commit_messages = request_commit_messages(question)
