@@ -1,5 +1,4 @@
 import os
-from openai import OpenAI
 from dotenv import load_dotenv
 from diffs import *
 import sys
@@ -25,12 +24,11 @@ def main():
         print("No changes detected. Exiting.")
         return
 
-    file_path = save_diff_to_file(diff_output)
-    print(f"Git diff output saved to: {file_path}")
+    # For DEBUG purpose
+    # file_path = save_diff_to_file(diff_output)
+    # print(f"Git diff output saved to: {file_path}")
 
     # Suggest commit messages
-    # Send changes to llm for commits message
-    # Ability to suggest 3 commits messages to choose from
     suggest_commit_message(directory, diff_output)
 
 
