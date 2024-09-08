@@ -46,7 +46,9 @@ def commit_to_repo(directory: str, commit_message: str):
 
 def suggest_commit_message(directory: str, diff_content: str):
     """Suggest 3 commit messages and allow the user to pick or enter their own, then commit."""
-    question = f"Suggest 3 commit messages based on the diffs provided below.\n Just return an array of 3 strings, each message should be separated by \n and not have quote around and not be numbered: \n\n {
+    # question = f"Suggest 3 commit messages based on the diffs provided below.\n Just return an array of 3 strings, each message should be separated by \n and not have quote around and not be numbered: \n\n {
+    # diff_content}"
+    question = f"Based on the diffs provided below, suggest exactly 3 concise and meaningful commit messages. Each commit message should be on a new line and formatted as plain text. Do not include numbers, quotes, or any additional characters in the messages. Return only the commit messages as an array of 3 plain text strings.\n\n {
         diff_content}"
     commit_messages = ask_question(question)
 
