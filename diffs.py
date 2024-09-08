@@ -41,6 +41,7 @@ def commit_to_repo(directory: str, commit_message: str):
         subprocess.run(['git', '-C', directory, 'commit',
                        '-m', commit_message], check=True)
         print(f"\nChanges committed message: {commit_message}")
+        # Could try suggesting to push to git???
     except subprocess.CalledProcessError as e:
         print(f"Failed to commit changes: {e}")
 
