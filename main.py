@@ -1,57 +1,38 @@
 import os
 from openai import OpenAI
 from dotenv import load_dotenv
-
+from diffs import *
+import sys
 
 load_dotenv()
-client = OpenAI(
-    api_key=os.environ.get("OPENAI_API_KEY"),
-)
 
 
-# response = openai.ChatCompletion.create(
-#     model="gpt-4", echo $VIRTUAL_ENV
-# Specify the model you want to use
-#     messages=[
-#         {"role": "system", "content": "You are a helpful assistant."},
-#         {"role": "user", "content": "What is the capital of France?"}
-#     ]
-# )
+def main():
+    """Main function to check if git repo, run git diff, and handle output."""
+    # Use the directory passed as an argument or the current working directory
+    directory = sys.argv[1] if len(sys.argv) > 1 else os.getcwd()
 
-# Ask a question
+    if not os.path.isdir(directory):
+        print(f"Directory '{directory}' does not exist. Exiting.")
+        return
 
+    if not is_git_repo(directory):
+        print(f"'{directory}' is not a git repository. Exiting.")
+        return
 
-# def ask_question(question):
-#     response = openai.ChatCompletion.create(
-#         model="gpt-4",
-#         messages=[
-#             {"role": "system", "content": "You are a helpful assistant."},
-#             {"role": "user", "content": question}
-#         ]
-#     )
+    diff_output = run_git_diff(directory)
+    if not diff_output:
+        print("No changes detected. Exiting.")
+        return
 
-#     answer = response['choices'][0]['message']['content']
-#     return answer
+    file_path = save_diff_to_file(diff_output)
+    print(f"Git diff output saved to: {file_path}")
 
-# Ask a question
-def ask_question(question: str):
-    response = client.completions.create(
-        model="gpt-3.5-turbo-instruct",  # Specify the model you want to use
-        prompt=question,
-        n=1,
-        max_tokens=150  # Limit the response size)
-    )
-    # Extract the response text and split into messages
-    messages = response.choices[0].text.strip().split('\n')
-
-    # Filter out empty messages and clean them up
-    messages = [msg.strip() for msg in messages if msg.strip()]
-    # answer = response.choices[0].text.strip()
-    return messages
+    # Suggest commit messages
+    # Send changes to llm for commits message
+    # Ability to suggest 3 commits messages to choose from
+    suggest_commit_message(directory, diff_output)
 
 
-# Example usage
-question = "Generate 3 random messages"
-answer = ask_question(question)
-print(f"Len: {len(answer)}")
-print(f"Answer: {answer}")
+if __name__ == '__main__':
+    main()
