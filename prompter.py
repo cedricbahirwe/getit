@@ -20,6 +20,7 @@ def request_commit_messages(question: str) -> list[str]:
         model="gpt-3.5-turbo-instruct",  # Specify the model you want to use
         prompt=question,
         n=1,
+        temperature=0.3,
         max_tokens=150  # Limit the response size
     )
     print(f"Received {len(response.choices)} {

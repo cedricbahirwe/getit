@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import subprocess
-from prompting import *
+from prompter import *
 
 
 def is_git_repo(directory: str):

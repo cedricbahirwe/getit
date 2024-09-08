@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from diffs import *
+from commiter import *
 import sys
 
 load_dotenv()
