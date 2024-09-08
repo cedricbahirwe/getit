@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
-import os
 import subprocess
-import sys
 from prompting import *
 
 
-def is_git_repo(directory):
+def is_git_repo(directory: str):
     """Check if the provided directory is a git repository."""
     try:
         subprocess.run(['git', '-C', directory, 'rev-parse', '--is-inside-work-tree'],
@@ -41,8 +39,7 @@ def commit_to_repo(directory: str, commit_message: str):
                        check=True)  # Stage all changes
         subprocess.run(['git', '-C', directory, 'commit',
                        '-m', commit_message], check=True)
-        print(f"\nChanges have been committed with the message: {
-              commit_message}")
+        print(f"\nChanges committed message: {commit_message}")
     except subprocess.CalledProcessError as e:
         print(f"Failed to commit changes: {e}")
 
@@ -52,17 +49,12 @@ def suggest_commit_message(directory: str, diff_content: str):
     question = f"Suggest 3 commit messages based on the diffs provided below.\n Just return an array of 3 strings, each message should be separated by \n and not have quote around and not be numbered: \n\n {
         diff_content}"
     commit_messages = ask_question(question)
-    # commit_messages = [
-    #     "Refactor code and improve readability",
-    #     "Fix formatting issues across multiple files",
-    #     "Add error handling for async operations"
-    # ]
 
     print("\nSuggested commit messages:")
     for i, msg in enumerate(commit_messages, 1):
         print(f"{i}. {msg}")
-    print("4. Enter your own commit message")
-    print("5. Exit")
+    print(f"{len(commit_messages)+1}. Enter your own commit message")
+    print(f"{len(commit_messages)+2}. Exit")
 
     # Get user choice
     choice = input("\nChoose an option (1-5): ").strip()
